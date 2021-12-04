@@ -1,0 +1,68 @@
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    span{
+    background: #009688;
+    height: 100%;
+    width: 0%;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+        }
+</style>
+  {% if title %}
+    <title>E-Health - {{ title }}</title>
+  {% else %}
+    <title>E-Health</title>
+  {% endif %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&family=Playfair+Display:ital@1&family=Slabo+27px&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="banner">
+        <div class="navbar">
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Admin Module</a></li>
+                <li><a href="#">Doctor Module</a></li>
+                <li><a href="#">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="content">
+            <h1 style="font-family: 'Slabo 27px', serif; padding-left: 40px; font-size: 60px;">WELCOME TO E-HEALTH!</h1>
+            <p style="padding-top: 40px;
+                      line-height: 1.9;
+                      font-size: 28px;">
+                E-Health is a Web-Based Computerised Record Keeping<br>System
+                that decentralises your medical records making them<br>available, at
+                all times, to your medical caretaker regardless<br>of the hospital visited.
+            </p>
+            <div>
+                <button type="button" class="cont"><span></span>READ MORE</button>
+                <button type="button" class="cont"><span></span>CONTACT US</button>
+            </div>
+        </div>
+        <div class="loginPage">
+            <form method="POST">
+                <h1 style="text-align: center">LOGIN FORM</h1>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="log" type="submit">LOGIN</button>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>

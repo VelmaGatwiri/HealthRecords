@@ -1,0 +1,23 @@
+{% load crispy_forms_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="content-section">
+        <form action="{% url 'User-PatientRegistration' %}" method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">User Registration Form</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Sign up</button>
+                 <button class="btn btn-outline-info">Cancel</button>
+            </div>
+         </form>
+    </div>
+</body>
+</html>
