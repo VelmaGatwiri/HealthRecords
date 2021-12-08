@@ -47,7 +47,7 @@ class Patient(models.Model):
         verbose_name = 'Patient Module'
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 class Doctor(models.Model):
@@ -71,7 +71,7 @@ class Doctor(models.Model):
         verbose_name = 'Doctor Module'
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 class Administrator(models.Model):
@@ -81,7 +81,7 @@ class Administrator(models.Model):
         verbose_name = 'Administrator Module'
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 class Profile(models.Model):

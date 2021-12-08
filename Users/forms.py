@@ -60,8 +60,11 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class PatientRegistrationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=250, required=True)
+    last_name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
     Phone_Number = forms.CharField(required=True)
-    Physical_Address = forms.CharField(required=True)
+    Physical_Address = forms.CharField()
     Date_Of_Birth = forms.DateField(required=True)
     Age = forms.CharField(required=True)
     UserSex = [('Male', 'M'),
@@ -76,7 +79,7 @@ class PatientRegistrationForm(UserCreationForm):
                ('O_negative', 'O-'),
                ('AB_positive', 'AB+'),
                ('AB_negative', 'AB-'),
-    ]
+            ]
     Blood_Group = forms.ChoiceField(required=True, choices=bloodGrp)
     Allergies = forms.CharField(required=True)
     Next_Of_Kin = forms.CharField(required=True)
@@ -87,6 +90,9 @@ class PatientRegistrationForm(UserCreationForm):
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
+        user.email = self.cleaned_data.get('email')
         user.Phone_Number = self.cleaned_data.get('Phone Number')
         user.Physical_Address = self.cleaned_data.get('Physical_Address')
         user.Date_Of_Birth = self.cleaned_data.get('Date_Of_Birth')
@@ -103,6 +109,9 @@ class PatientRegistrationForm(UserCreationForm):
 
 
 class DoctorRegistrationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=250, required=True)
+    last_name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
     Phone_Number = forms.CharField(required=True)
     Physical_Address = forms.CharField(required=True)
     Date_Of_Birth = forms.DateField(required=True)
@@ -128,6 +137,9 @@ class DoctorRegistrationForm(UserCreationForm):
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
+        user.email = self.cleaned_data.get('email')
         user.Phone_Number = self.cleaned_data.get('Phone Number')
         user.Physical_Address = self.cleaned_data.get('Physical_Address')
         user.Date_Of_Birth = self.cleaned_data.get('Date_Of_Birth')

@@ -1,20 +1,18 @@
-from django.contrib.auth import login
-from .forms import CustomUserCreationForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .decorators import allowed_users
 from .forms import *
 from django.shortcuts import render, redirect
 from .models import *
+from MedicalApp.models import *
 from django.views.generic import CreateView
 
 
-def home(request):
-    return render(request, 'Users/userDash.html')
-
-
 def patient(request):
-    return render(request, 'Users/PatientModule.html')
+    context = {
+            'record': Record.objects.all()
+    }
+    return render(request, 'Users/PatientModule.html', context)
 
 
 def admin(request):
@@ -29,6 +27,33 @@ def hospital(request):
     return render(request, 'Users/HospitalModule.html')
 
 
+def login_view(request):
+    form = LoginForm(request.POST or None)
+    msg = None
+    if request.method == 'POST':
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None and user.is_patient:
+                login(request, user)
+                return redirect('PatientModule')
+            elif user is not None and user.is_doctor:
+                login(request, user)
+                return redirect('doctor')
+            elif user is not None and user.is_admin:
+                login(request, user)
+                return redirect('admin')
+            elif user is not None and user.is_hospital:
+                login(request, user)
+                return redirect('hospital')
+            else:
+                msg = 'Invalid Credentials'
+        else:
+            msg = 'error validating form'
+    return render(request, 'Users/login.html', {'form': form, 'msg': msg})
+
+
 class PatientRegistration(CreateView):
     model = CustomUser
     form_class = PatientRegistrationForm
@@ -37,7 +62,7 @@ class PatientRegistration(CreateView):
     def validation(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('PatientModule')
+        return redirect('PatientModule') #Latest changes made that redirects the user after registering
 
 
 class DoctorRegistration(CreateView):
@@ -45,21 +70,11 @@ class DoctorRegistration(CreateView):
     form_class = DoctorRegistrationForm
     template_name = 'Users/DoctorRegistration.html'
 
-    def validation(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('DoctorModule')
-
 
 class HospitalRegistration(CreateView):
     model = CustomUser
     form_class = HospitalRegistrationForm
     template_name = 'Users/HospitalRegistration.html'
-
-    def validation(self, form):
-        hospital = form.save()
-        login(self.request, hospital)
-        return redirect('HospitalModule')
 
 
 @login_required
