@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.shortcuts import render, redirect
-from .models import *
 from MedicalApp.models import *
 from django.views.generic import CreateView
 
@@ -62,13 +61,18 @@ class PatientRegistration(CreateView):
     def validation(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('PatientModule') #Latest changes made that redirects the user after registering
+        return redirect('login')
 
 
 class DoctorRegistration(CreateView):
     model = CustomUser
     form_class = DoctorRegistrationForm
     template_name = 'Users/DoctorRegistration.html'
+
+    def validation(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('login')
 
 
 class HospitalRegistration(CreateView):

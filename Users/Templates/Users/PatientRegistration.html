@@ -6,6 +6,11 @@
     <title>Title</title>
 </head>
 <body>
+    {% if form.non_field_errors %}
+        <div class="form-group text-error">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
     <div class="content-section">
         <form action="{% url 'User-PatientRegistration' %}" method="POST">
             {% csrf_token %}

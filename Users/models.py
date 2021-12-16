@@ -12,10 +12,9 @@ class CustomUser(AbstractUser):
     Age = models.CharField(max_length=3, null=True)
     Male = 'M'
     Female = 'F'
-    NotApplicable = 'N/A'
-    SEX_CHOICES = [(Male, 'M'), (Female, 'F'), (NotApplicable, 'N/A'), ]
+    SEX_CHOICES = [(Male, 'M'), (Female, 'F')]
     Sex = models.CharField(max_length=30, choices=SEX_CHOICES, null=True)
-    is_patient = models.BooleanField('is_patient', default=True)
+    is_patient = models.BooleanField('is_patient', default=False)
     is_doctor = models.BooleanField('is_doctor', default=False)
     is_administrator = models.BooleanField('is_administrator', default=False)
     is_hospital = models.BooleanField('is_hospital', default=False)

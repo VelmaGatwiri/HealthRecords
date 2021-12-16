@@ -78,7 +78,7 @@ class PatientRegistrationForm(UserCreationForm):
                ('O_positive', 'O+'),
                ('O_negative', 'O-'),
                ('AB_positive', 'AB+'),
-               ('AB_negative', 'AB-'),
+               ('AB_negative', 'AB-')
             ]
     Blood_Group = forms.ChoiceField(required=True, choices=bloodGrp)
     Allergies = forms.CharField(required=True)
