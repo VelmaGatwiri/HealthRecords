@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'MedicalApp.apps.MedicalappConfig',
     'Users.apps.UsersConfig',
     'crispy_forms',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

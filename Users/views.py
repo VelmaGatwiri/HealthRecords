@@ -5,52 +5,65 @@ from .forms import *
 from django.shortcuts import render, redirect
 from MedicalApp.models import *
 from django.views.generic import CreateView
+from .decorators import *
 
 
+def home(request):
+    return render(request, 'Users/Homepage.html')
+
+
+@login_required
+@allowed_users(allowed_roles=['Patient', 'Doctor'])
 def patient(request):
     context = {
-            'record': Record.objects.all()
+        'record': Record.objects.all()
     }
     return render(request, 'Users/PatientModule.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Admin'])
 def admin(request):
     return render(request, 'Users/AdminModule.html')
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def doctor(request):
     return render(request, 'Users/DoctorModule.html')
 
 
+@login_required
+# @allowed_users(allowed_roles=['Hospital'])
 def hospital(request):
     return render(request, 'Users/HospitalModule.html')
 
 
+@unauthenticated_user
 def login_view(request):
-    form = LoginForm(request.POST or None)
-    msg = None
     if request.method == 'POST':
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_patient:
-                login(request, user)
-                return redirect('PatientModule')
-            elif user is not None and user.is_doctor:
-                login(request, user)
-                return redirect('doctor')
-            elif user is not None and user.is_admin:
-                login(request, user)
-                return redirect('admin')
-            elif user is not None and user.is_hospital:
-                login(request, user)
-                return redirect('hospital')
-            else:
-                msg = 'Invalid Credentials'
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None and user.is_patient:
+            login(request, user)
+            return redirect('PatientModule')
+        if user is not None and user.is_doctor:
+            login(request, user)
+            return redirect('DoctorModule')
+        if user is not None and user.is_admin:
+            login(request, user)
+            return redirect('AdminModule')
+        if user is not None and user.is_hospital:
+            login(request, user)
+            return redirect('HospitalModule')
         else:
-            msg = 'error validating form'
-    return render(request, 'Users/login.html', {'form': form, 'msg': msg})
+            messages.info(request, 'Username ot Password is incorrect')
+
+    context = {}
+    return render(request, 'Users/login.html', context)
 
 
 class PatientRegistration(CreateView):

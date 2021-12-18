@@ -1,0 +1,9 @@
+{% extends "MedicalApp/base.html" %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-outline-info" name="Submit">
+    </form>
+{% endblock content %}

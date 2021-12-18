@@ -1,10 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/UsersStyle.css' %}">
+   {% if title %}
+    <title>E-Health - {{ title }}</title>
+   {% else %}
+    <title>E-Health</title>
+   {% endif %}
 </head>
 <body>
-
+    <div class="navbar">
+        <p>Navbar</p>
+        <!--Search patient, system Logo -->
+    </div>
+    <div class="container">
+        <div class="navPane">
+            <h1>Navigation</h1>
+            <!--<button class="btn"><a href="#">Doctor</a></button>
+            <button class="btn"><a href="#">Patient</a></button>
+            <button class="btn"><a href="#">Reports</a></button>
+            <button class="btn"><a href="#">Contact Administrator</a></button>-->
+            <button class="btn">Profile</button>
+            <button class="btn">Patient</button>
+            <button class="btn">Appointments</button>
+        </div>
+        <h1>HOSPITAL PROFILE</h1>
+        <!--Write a brief background of the hospitals module and incorporate moving pictures.-->
+    </div>
 </body>
 </html>
