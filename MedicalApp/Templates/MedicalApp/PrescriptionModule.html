@@ -1,20 +1,18 @@
 {% extends "MedicalApp/base.html" %}
 {% block content %}
     <!--I should be able to search through the records to narrow down data for a particular hospital-->
-    <a class="btn btn-primary btn-sm btn-block" href="{% url 'AddRecordModule' %}">Add Records</a>
+    <a class="btn btn-primary btn-sm btn-block" href="{% url 'AddPrescriptionModule' %}">New Prescription</a>
     <table class="table">
         <tr>
             <th>Patient Name</th>
-            <th>Doctor Name</th>
-            <th>Hospital Name</th>
-            <th>Record Date</th>
+            <th>Record ID</th>
+            <th>Prescription Details</th>
         </tr>
         {% for p in presc %}
             <tr>
                 <td>{{ p.Patient_ID }}</td>
-                <td>{{ p.Doctor_ID }}</td>
-                <td>{{ p.Hospital_ID }}</td>
-                <td>{{ p.Record_Date }}</td>
+                <td>{{ p.Record_ID }}</td>
+                <td>{{ p.Prescription_Details }}</td>
             </tr>
         {% endfor %}
     </table>

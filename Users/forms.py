@@ -128,7 +128,7 @@ class DoctorRegistrationForm(UserCreationForm):
                     ('Ped', 'Pediatrician'),
                     ('Phy', 'Physician'),
                     ('Ob_GYN', 'Obstetrician and Gynecologist'),
-                    ('Onc', 'Oncologist'),]
+                    ('Onc', 'Oncologist'), ]
     Specialty = forms.ChoiceField(required=True, choices=docSpecialty)
 
     class Meta(UserCreationForm.Meta):

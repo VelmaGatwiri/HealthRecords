@@ -19,12 +19,12 @@ def prescription(request):
 
 
 def appointment(request):
-    appoint = Record.objects.all()
+    appoint = Appointment.objects.all()
 
     return render(request, 'MedicalApp/AppointmentModule.html', {'appoint': appoint})
 
 
-def createRecord(request):
+def create_record(request):
     form = RecordForm()
     if request.method == 'POST':
         form = RecordForm(request.POST)
@@ -34,3 +34,27 @@ def createRecord(request):
     context = {'form': form}
 
     return render(request, 'MedicalApp/addRecord.html', context)
+
+
+def create_appointment(request):
+    form = AppointmentForm()
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('AppointmentsModule')
+    context = {'form': form}
+
+    return render(request, 'MedicalApp/addAppointment.html', context)
+
+
+def create_prescription(request):
+    form = PrescriptionForm()
+    if request.method == 'POST':
+        form = PrescriptionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('PrescriptionModule')
+    context = {'form': form}
+
+    return render(request, 'MedicalApp/addPrescription.html', context)

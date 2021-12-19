@@ -32,8 +32,9 @@
         <div class="navbar">
             <ul>
                 <li><a href="#">About</a></li>
-                <li><a href="#">Admin Module</a></li>
-                <li><a href="#">Doctor Module</a></li>
+                <li><a href="{% url 'AdminModule' %}">Admin Module</a></li>
+                <li><a href="{% url 'DoctorModule' %}">Doctor Module</a></li>
+                <li><a href="{% url 'HospitalModule' %}">Hospital Module</a></li>
                 <li><a href="#">Contact</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>

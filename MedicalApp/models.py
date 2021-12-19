@@ -29,7 +29,7 @@ class Appointment(models.Model):
     Hospital_ID = models.ForeignKey(Hospital, on_delete=models.RESTRICT)
     Record_ID = models.ForeignKey(Record, on_delete=models.RESTRICT)
     Appointment_Details = models.TextField()
-    Appointment_Schedule = models.DateField(editable=True)
+    Appointment_Schedule = models.DateTimeField()
 
     def __str__(self):
         return str(self.Patient_ID)

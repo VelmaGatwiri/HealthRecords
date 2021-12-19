@@ -18,14 +18,14 @@
     <div class="container">
         <div class="navPane">
             <h1>Navigation</h1>
-            <!--<button class="btn"><a href="#">Doctor</a></button>
-            <button class="btn"><a href="#">Patient</a></button>
-            <button class="btn"><a href="#">Reports</a></button>
-            <button class="btn"><a href="#">Contact Administrator</a></button>-->
-            <button class="btn" href="{% url 'profile' %}">Profile</button>
+            <button class="btn"><a href="{% url 'profile' %}">Profile</a></button>
+            <button class="btn"><a href="{% url 'RecordsModule' %}">Records</a></button>
+            <button class="btn"><a href="#">Appointments</a></button>
+            <button class="btn"><a href="#">Prescriptions</a></button>
+            <!--<button class="btn" href="{% url 'profile' %}">Profile</button>
             <button class="btn" href="{% url 'RecordsModule' %}">Records</button>
             <button class="btn" href="#">Appointments</button>
-            <button class="btn" href="#">Prescriptions</button>
+            <button class="btn" href="#">Prescriptions</button>-->
         </div>
         <h1>{{ user.username }}'s Recent Records</h1>
         <!--Write a brief background of the hospitals module and incorporate moving pictures.-->

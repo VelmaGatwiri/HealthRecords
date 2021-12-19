@@ -13,7 +13,7 @@ def home(request):
 
 
 @login_required
-@allowed_users(allowed_roles=['Patient', 'Doctor'])
+# @allowed_users(allowed_roles=['Patient', 'Doctor'])
 def patient(request):
     context = {
         'record': Record.objects.all()
@@ -74,7 +74,7 @@ class PatientRegistration(CreateView):
     def validation(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('login')
+        return redirect('HospitalModule')
 
 
 class DoctorRegistration(CreateView):
@@ -85,7 +85,7 @@ class DoctorRegistration(CreateView):
     def validation(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('login')
+        return redirect('HospitalModule')
 
 
 class HospitalRegistration(CreateView):

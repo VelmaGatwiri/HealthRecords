@@ -4,6 +4,19 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" class="btn btn-outline-info" name="Submit">
+        <div class="input-group date" id="id_Appointment_Schedule" data-target-input="nearest">
+  {{ form.date }}
+  <div class="input-group-append" data-target="#id_Appointment_Schedule" data-toggle="datetimepicker">
+    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+  </div>
+</div>
+        <input type="submit" class="btn btn-outline-info" style="text-align: center;" name="Submit">
     </form>
+ <script>
+  $(function () {
+    $("#id_Appointment_Schedule").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
+</script>
 {% endblock content %}
