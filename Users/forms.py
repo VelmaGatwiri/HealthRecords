@@ -162,7 +162,7 @@ class HospitalRegistrationForm(ModelForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'Phone_Number', 'email', 'Physical_Address', 'Sex']
+        fields = ['first_name', 'last_name', 'Phone_Number', 'Physical_Address', 'Sex']
 
 
 class ProfileUpdateForm(forms.ModelForm):
