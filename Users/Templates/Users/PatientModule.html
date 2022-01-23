@@ -9,6 +9,40 @@
    {% else %}
     <title>E-Health</title>
    {% endif %}
+<style>
+    .patient-rec-table{
+        border-collapse: collapse;
+        margin: 25px 5px 0px 350px;
+        font-size: 20px;
+        min-width: 400px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    }
+    .patient-rec-table thead tr{
+        background-color: #CEA0AE;
+        color: white;
+        text-align: left;
+        font-weight: bold;
+    }
+    .patient-rec-table th,
+    .patient-rec-table td{
+        padding: 12px 15px;
+    }
+    .patient-rec-table tbody tr{
+        border-bottom: 1px solid #dddddd;
+    }
+    .patient-rec-table tbody tr:nth-of-type(even){
+        background-color: #f3f3f3;
+    }
+    .patient-rec-table tbody tr:last-of-type{
+        border-bottom: 2px solid #009688;
+    }
+    /*.patient-rec-table tbody tr.active-row{
+        font-weight:bold;
+        color: #0AFFE7;
+    }*/
+</style>
 </head>
 <body>
     <div class="navbar">
@@ -18,7 +52,7 @@
     <div class="container">
         <div class="navPane">
             <h1>Navigation</h1>
-            <button class="btn"><a href="{% url 'profile' %}">Profile</a></button>
+            <button class="btn"><a href="{% url 'UserDetailsModule' %}">Profile</a></button>
             <button class="btn"><a href="{% url 'RecordsModule' %}">Records</a></button>
             <button class="btn"><a href="#">Appointments</a></button>
             <button class="btn"><a href="#">Prescriptions</a></button>
@@ -27,7 +61,28 @@
             <button class="btn" href="#">Appointments</button>
             <button class="btn" href="#">Prescriptions</button>-->
         </div>
-        <h1>{{ user.username }}'s Recent Records</h1>
+        <h1 style="color: #542344; font-weight: bold; font-style: italic;">{{ user.username }}'s Recent Records</h1>
+            <table class="patient-rec-table">
+                <thead>
+                    <tr>
+                    <th>Doctor's Name</th>
+                    <th>Hospital Name</th>
+                    <th>Diagnosis</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for  records in records %}
+                    <tr>
+                        <td>{{ records.Doctor_ID }}</td>
+                        <td>{{ records.Hospital_ID }}</td>
+                        <td>{{ records.New_Diagnosis }}</td>
+                        <td>{{ records.Record_Date }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         <!--Write a brief background of the hospitals module and incorporate moving pictures.-->
     </div>
 </body>

@@ -15,6 +15,7 @@
     <title>E-Health - {{ user.username }}'s Profile</title>
   {% endif %}
     <link rel="stylesheet" type="text/css" href="{% static 'Users/style.css' %}">
+     <link rel="stylesheet" type="text/css" href="{% static 'Users/UsersStyle.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&family=Playfair+Display:ital@1&family=Slabo+27px&display=swap" rel="stylesheet">
@@ -24,53 +25,19 @@
     height: 100px;
     border-radius: 50%;
     }
-    .profilePage{
-      margin-bottom: 30px;
-    }
-    .profile{
-        border: 1px transparent;
-      padding: 10px;
-     box-shadow: 0 10px 15px rgb(0 0 0 / 0.2);
-        width: 90%;
-        position: center;
-        margin-left: 5%;
-    }
 </style>
 </head>
 <body>
-    <div class="ban">
         <div class="navbar">
-            <ul>
-                <li><a href="#">About</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'profile' %}">Profile</a></li>
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                    <li><a href="{% url 'profile' %}">Hello {{ user.username }},</a></li>
-                {% else %}
-                    <li><a href="#">Admin Module</a></li>
-                    <li><a href="#">Doctor Module</a></li>
-                {% endif %}
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    {% if messages %}
-        {% for message in messages %}
+
+        <button class="btn"><a href="{% url 'UserDetailsModule' %}">Back</a></button>
+            {% if messages %}
+               {% for message in messages %}
             <div class="alert alert-{{ message.tags }}"></div>
             {{ message }}
         {% endfor %}
     {% endif %}
-    </div>
-    <div class="profilePage">
-        <div class="profile">
-            <div style="width: 150px; height: 150px; display: flex">
-                <div style="padding-right: 50px;"><img alt="User's Profile Pic" src="{{ user.profile.image.url}}"></div>
-                <div>
-                    <h2>{{ user.username }}</h2>
-                    <p>{{ user.email }}</p>
-                </div>
-             </div>
-       </div>
-    </div>
+        </div>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group" style="margin-left: 20px">
@@ -79,7 +46,6 @@
             {{ p_form|crispy }}
         </fieldset>
         <button class="btn btn-outline-info" type="submit" style="margin-left: 10%; margin-top: 2%">Update</button>
-
     </form>
 </body>
 </html>

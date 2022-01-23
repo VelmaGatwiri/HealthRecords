@@ -2,10 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import *
 
 
-def patient(request):
-    return render(request, 'MedicalApp/patientModule.html')
-
-
 def records(request):
     records = Record.objects.all()
 

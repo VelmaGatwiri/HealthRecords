@@ -2,10 +2,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import *
-from django.shortcuts import render, redirect
-from MedicalApp.models import *
+from django.shortcuts import render
 from django.views.generic import CreateView
 from .decorators import *
+from .models import *
 
 
 def home(request):
@@ -14,10 +14,12 @@ def home(request):
 
 @login_required
 # @allowed_users(allowed_roles=['Patient', 'Doctor'])
-def patient(request):
-    context = {
-        'record': Record.objects.all()
-    }
+def patient(request, pk):
+    pat = Patient.objects.get(user_id=pk)
+
+    records = pat.record_set.all()
+
+    context = {'patient': pat, 'records': records}
     return render(request, 'Users/PatientModule.html', context)
 
 
@@ -94,6 +96,14 @@ class HospitalRegistration(CreateView):
     template_name = 'Users/HospitalRegistration.html'
 
 
+def user_details(request):
+    context = {
+        'details': CustomUser.objects.all(),
+        'health': Patient.objects.all()
+    }
+    return render(request, 'Users/User_Details.html', context)
+
+
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -102,7 +112,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Your account has been updated!')
+            messages.success(request, f'Your Profile has been updated!')
             return redirect('profile')
 
     else:
