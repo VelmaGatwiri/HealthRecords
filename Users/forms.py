@@ -72,14 +72,14 @@ class PatientRegistrationForm(UserCreationForm):
                ('NotApplicable', 'N/A'), ]
     Sex = forms.ChoiceField(choices=UserSex, required=True)
     bloodGrp = [('A_positive', 'A+'),
-               ('A_negative', 'A-'),
-               ('B_positive', 'B+'),
-               ('B_negative', 'B-'),
-               ('O_positive', 'O+'),
-               ('O_negative', 'O-'),
-               ('AB_positive', 'AB+'),
-               ('AB_negative', 'AB-')
-            ]
+                ('A_negative', 'A-'),
+                ('B_positive', 'B+'),
+                ('B_negative', 'B-'),
+                ('O_positive', 'O+'),
+                ('O_negative', 'O-'),
+                ('AB_positive', 'AB+'),
+                ('AB_negative', 'AB-')
+                ]
     Blood_Group = forms.ChoiceField(required=True, choices=bloodGrp)
     Allergies = forms.CharField(required=True)
     Next_Of_Kin = forms.CharField(required=True)

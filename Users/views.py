@@ -1,3 +1,4 @@
+import requests
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -6,6 +7,7 @@ from django.shortcuts import render
 from django.views.generic import CreateView
 from .decorators import *
 from .models import *
+
 
 
 def home(request):
@@ -48,7 +50,6 @@ def login_view(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-
         if user is not None and user.is_patient:
             login(request, user)
             return redirect('PatientModule')
@@ -62,7 +63,7 @@ def login_view(request):
             login(request, user)
             return redirect('HospitalModule')
         else:
-            messages.info(request, 'Username ot Password is incorrect')
+            messages.info(request, 'Username or Password is incorrect')
 
     context = {}
     return render(request, 'Users/login.html', context)

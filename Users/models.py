@@ -62,8 +62,8 @@ class Doctor(models.Model):
     Ob_GYN = 'Obstetrician and Gynecologist'
     Onc = 'Oncologist'
     SPECIALTY = [(Card, 'Cardiologist'), (Dent, 'Dentist'), (Derm, 'Dermatology'),
-                           (Neuro, 'Neurologist'), (Path, 'Pathology'), (Ped, 'Pediatrician'), (Phy, 'Physician'),
-                           (Ob_GYN, 'Obstetrician and Gynecologist'), (Onc, 'Oncologist'), ]
+                 (Neuro, 'Neurologist'), (Path, 'Pathology'), (Ped, 'Pediatrician'), (Phy, 'Physician'),
+                 (Ob_GYN, 'Obstetrician and Gynecologist'), (Onc, 'Oncologist'), ]
     specialty = models.CharField(max_length=50, choices=SPECIALTY, null=True, blank=True, default=Phy)
 
     class Meta:
@@ -89,6 +89,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
-
-
-class Code(models.Model):
