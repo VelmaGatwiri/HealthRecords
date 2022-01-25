@@ -38,8 +38,8 @@
             <ul>
                 <li><a href="#">About</a></li>
                 {% if user.is_authenticated %}
+                    <li><a href="{% url 'UserDetailsModule' %}">Profile</a></li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
-                    <li><a href="{% url 'profile' %}">Hello {{ user.username }},</a></li>
                 {% else %}
                     <li><a href="{% url 'User-PatientRegistration' %}">Add Patient</a></li>
                     <li><a href="{% url 'User-DoctorRegistration' %}">Add Doctor</a></li>

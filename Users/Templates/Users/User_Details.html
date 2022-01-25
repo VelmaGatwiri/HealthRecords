@@ -22,7 +22,7 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'logout' %}">Logout</a>
                     <a href="{% url 'profile' %}">Update Profile</a>
-                    <a href="{% url 'PatientModule' user.id %}">Records</a>
+                    <a href="{% url 'Records-Details' user.id %}">Records</a>
                 {% else %}
                     <li><a href="#">Admin Module</a></li>
                     <li><a href="#">Doctor Module</a></li>
@@ -63,7 +63,7 @@
                                     <h5>Blood Group:</h5>
                                 </div>
                                 <div class="col-md-9 text-secondary">
-                                    {{ health.Blood_Group }}
+                                    {{ user.Blood_Group }}
                                 </div>
                             </div>
                             <hr>

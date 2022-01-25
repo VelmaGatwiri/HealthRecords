@@ -61,7 +61,7 @@
             <button class="btn" href="#">Appointments</button>
             <button class="btn" href="#">Prescriptions</button>-->
         </div>
-        <h1 style="color: #542344; font-weight: bold; font-style: italic;">{{ user.username }}'s Recent Records</h1>
+        <h1 style="color: #542344; font-weight: bold; font-style: italic;">Recent Records</h1><hr style="border-top: 1px dashed #009688;">
             <table class="patient-rec-table">
                 <thead>
                     <tr>
@@ -77,7 +77,7 @@
                     <tr>
                         <td>{{ records.Doctor_ID }}</td>
                         <td>{{ records.Hospital_ID }}</td>
-                        <td>{{ records.New_Diagnosis }}</td>
+                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.New_Diagnosis }}</a></td>
                         <td>{{ records.Record_Date }}</td>
                     </tr>
                 {% endfor %}

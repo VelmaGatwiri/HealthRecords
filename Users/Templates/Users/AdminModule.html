@@ -22,10 +22,10 @@
             <button class="btn"><a href="#">Patient</a></button>
             <button class="btn"><a href="#">Reports</a></button>
             <button class="btn"><a href="#">Contact Administrator</a></button>-->
-            <button class="btn">Profile</button>
-            <button class="btn">Hospital</button>
+            <button class="btn"><a href="{% url 'UserDetailsModule' %}">Profile</a></button>
+            <button class="btn"><a href="{% url 'User-HospitalRegistration' %}">Add Hospital</a></button>
         </div>
-        <h1>{{ user.username }}'s Hospitals Registered</h1>
+        <h1>{{ user.username }}'s Registered Hospitals</h1>
         <!--Write a brief background of the hospitals module and incorporate moving pictures.-->
     </div>
 </body>

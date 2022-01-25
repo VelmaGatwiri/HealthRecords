@@ -5,4 +5,3 @@ admin.site.register(Hospital)
 admin.site.register(Appointment)
 admin.site.register(Prescription)
 admin.site.register(Record)
-

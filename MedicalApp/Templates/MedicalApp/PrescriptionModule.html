@@ -13,6 +13,9 @@
                 <td>{{ p.Patient_ID }}</td>
                 <td>{{ p.Record_ID }}</td>
                 <td>{{ p.Prescription_Details }}</td>
+                <td><a class="btn btn-sm btn-info" href="{% url 'UpdatePrescriptionModule' prescription.id %}">Update Prescription</a></td>
+                <td><a class="btn btn-sm btn-danger" href="{% url 'DeletePrescriptionModule' prescription.id %}">Delete Prescription</a></td>
+
             </tr>
         {% endfor %}
     </table>

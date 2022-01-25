@@ -1,4 +1,3 @@
-import requests
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,7 +6,7 @@ from django.shortcuts import render
 from django.views.generic import CreateView
 from .decorators import *
 from .models import *
-
+from MedicalApp.models import Hospital
 
 
 def home(request):
@@ -19,7 +18,7 @@ def home(request):
 def patient(request, pk):
     pat = Patient.objects.get(user_id=pk)
 
-    records = pat.record_set.all()
+    records = pat.record_set.all().order_by('-Record_Date')
 
     context = {'patient': pat, 'records': records}
     return render(request, 'Users/PatientModule.html', context)
@@ -40,33 +39,35 @@ def doctor(request):
 @login_required
 # @allowed_users(allowed_roles=['Hospital'])
 def hospital(request):
-    return render(request, 'Users/HospitalModule.html')
+    context = {
+        'hos': Hospital.objects.all()
+    }
+    return render(request, 'Users/HospitalModule.html', context)
 
 
-@unauthenticated_user
 def login_view(request):
+    form = LoginForm(request.POST or None)
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        if form.is_valid():
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None and user.is_patient:
-            login(request, user)
-            return redirect('PatientModule')
-        if user is not None and user.is_doctor:
-            login(request, user)
-            return redirect('DoctorModule')
-        if user is not None and user.is_admin:
-            login(request, user)
-            return redirect('AdminModule')
-        if user is not None and user.is_hospital:
-            login(request, user)
-            return redirect('HospitalModule')
+            user = authenticate(request, username=username, password=password)
+            if user is not None and user.is_doctor:
+                login(request, user)
+                return redirect('DoctorModule')
+            if user is not None and user.is_admin:
+                login(request, user)
+                return redirect('AdminModule')
+            if user is not None and user.is_hospital:
+                login(request, user)
+                return redirect('HospitalModule')
+            else:
+                messages.info(request, 'Username or Password is incorrect')
         else:
-            messages.info(request, 'Username or Password is incorrect')
+            messages.info(request, 'Error Validating Forms')
 
-    context = {}
-    return render(request, 'Users/login.html', context)
+    return render(request, 'Users/StaffLogin.html', {'form': form})
 
 
 class PatientRegistration(CreateView):
@@ -96,13 +97,14 @@ class HospitalRegistration(CreateView):
     form_class = HospitalRegistrationForm
     template_name = 'Users/HospitalRegistration.html'
 
+    def validation(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('AdminModule')
+
 
 def user_details(request):
-    context = {
-        'details': CustomUser.objects.all(),
-        'health': Patient.objects.all()
-    }
-    return render(request, 'Users/User_Details.html', context)
+    return render(request, 'Users/User_Details.html')
 
 
 @login_required
