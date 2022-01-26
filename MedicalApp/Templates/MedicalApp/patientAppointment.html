@@ -6,19 +6,23 @@
     <link rel="stylesheet" type="text/css" href="{% static 'Users/UsersStyle.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'Users/UserModules.css' %}">
 
-    <title>E-Health - {{ user.username }}</title>
+   {% if title %}
+    <title>E-Health - {{ title }}</title>
+   {% else %}
+    <title>E-Health - Appointment Module</title>
+   {% endif %}
 <style>
     .patient-rec-table{
         border-collapse: collapse;
-        margin: 25px 5px 0 300px;
-        font-size: 14px;
+        margin: 25px 5px 0 250px;
+        font-size: 18px;
         min-width: 400px;
         border-radius: 5px 5px 0 0;
         overflow: hidden;
         box-shadow: 0 0 20px rgba(0,0,0,0.15);
     }
     .patient-rec-table thead tr{
-        background-color: #0005;
+        background-color: #CEA0AE;
         color: white;
         text-align: left;
         font-weight: bold;
@@ -58,48 +62,37 @@
     <div class="container">
         <div class="navPane">
             <h1>Navigation</h1>
-            <button class="btn"><a href="{% url 'UserDetailsModule' user.id  %}">Profile</a></button>
-            <button class="btn"><a href="{% url 'RecordsModule' %}">Records</a></button>
-            <button class="btn"><a href="#">Appointments</a></button>
-            <button class="btn"><a href="#">Prescriptions</a></button>
+            <button class="btn"><a href="{% url 'UserDetailsModule' patients.id %}">Profile</a></button>
+            <button class="btn"><a href="{% url 'PatientModule' user.id %}">Records</a></button>
+            <button class="btn"><a href="{% url 'AddAppointmentModule' %}">Appointments</a></button>
+            <button class="btn"><a href="{% url 'Prescription-Details' user.id %}">Prescriptions</a></button>
             <!--<button class="btn" href="{% url 'profile' %}">Profile</button>
             <button class="btn" href="{% url 'RecordsModule' %}">Records</button>
             <button class="btn" href="#">Appointments</button>
             <button class="btn" href="#">Prescriptions</button>-->
         </div>
-        <h1 style="color: #542344; font-weight: bold; font-style: italic;">Recent Records</h1><hr style="border-top: 1px dashed #009688;">
-        <div class="row" style="margin-left: 25%;">
-                <div class="col">
-                    <div class="card card-body">
-                        <form method="get">
-                            {{ patientfilter.form }}
-                            <button style="background-color: blue; border: none; color: white; padding: 5px;
-  text-align: center; text-decoration: none; display: inline-block; font-size: 18px; margin-left: 10px ;
-  cursor: pointer;
-    border-radius: 12px;" class="searchButton" type="submit">Search</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <h1 style="color: #542344; font-weight: bold; font-style: italic;">Upcoming Appointments</h1><hr style="border-top: 1px dashed #009688;">
             <table class="patient-rec-table">
                 <thead>
                     <tr>
                     <th>Doctor's Name</th>
                     <th>Hospital Name</th>
-                    <th>Diagnosis</th>
-                    <th>Date</th>
+                    <th>Appointment Details</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Status</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {% for  records in records %}
+                {% for  appointment in appointment %}
                     <tr>
-                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.Doctor_ID }}</a></td>
-                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.Hospital_ID }}</a></td>
-                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.New_Diagnosis }}</a></td>
-                        <td>{{ records.Record_Date }}</td>
-                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateRecordModule' records.id %}">UPDATE</a></td>
-                        <td><a style="color:red; font-weight: bold;" href="{% url 'DeleteRecordModule' records.id %}">DELETE</a></td>
+                        <td><a href="{% url 'Appointment-Details' appointment.id %}">{{ appointment.Doctor_ID }}</a></td>
+                        <td><a href="{% url 'Appointment-Details' appointment.id %}">{{ appointment.Hospital_ID }}</a></td>
+                        <td><a href="{% url 'Appointment-Details' appointment.id %}">{{ appointment.Appointment_Details }}</a></td>
+                        <td>{{ appointment.Appointment_Schedule }}</td>
+                        <td>{{ appointment.Appointment_Status }}</td>
+                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateAppointmentModule' appointment.id %}">UPDATE</a></td>
+                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'DeleteAppointmentModule' appointment.id %}">DELETE</a></td>
 
                     </tr>
                 {% endfor %}

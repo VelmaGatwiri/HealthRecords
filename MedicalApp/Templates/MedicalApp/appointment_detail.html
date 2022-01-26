@@ -1,10 +1,70 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/UsersStyle.css' %}">
+
+   {% if title %}
+    <title>E-Health - {{ title }}</title>
+   {% else %}
+    <title>E-Health</title>
+   {% endif %}
+<style>
+    .box {
+        width: 300px;
+        height: 200px;
+        margin-left: 30%;
+        margin-top: 20px;
+        align-items: center;
+    padding: 10px;
+    border: 1px solid #009688;
+    box-shadow:  -1px 1px #009688,
+         2px 2px #009688,
+         -3px 3px #009688,
+         -4px 4px #009688,
+         -5px 5px #009688;
+}
+</style>
 </head>
 <body>
+    <div class="navbar" style="background-color: #CEA0AE;">
+        <img src="{% static 'images/Logo.png' %}" alt="System Logo" style="width: 200px; height: 50px; margin: 0;">
+    </div>
+    <div class="container">
+        <div class="navPane">
+            <h1>Navigation</h1>
+            <button class="btn"><a href="{% url 'UserDetailsModule' %}">Profile</a></button>
+            <button class="btn"><a href="{% url 'RecordsModule' %}">Records</a></button>
+            <button class="btn"><a href="#">Appointments</a></button>
+            <button class="btn"><a href="#">Prescriptions</a></button>
+            <!--<button class="btn" href="{% url 'profile' %}">Profile</button>
+            <button class="btn" href="{% url 'RecordsModule' %}">Records</button>
+            <button class="btn" href="#">Appointments</button>
+            <button class="btn" href="#">Prescriptions</button>-->
+        </div>
 
+        <h1 style="color: #542344; font-weight: bold; font-style: italic;">Appointment Details</h1><hr style="border-top: 1px dashed #009688;">
+        <div class="container1">
+            <div class="box">
+                <div class="shadowbox">
+                    <img alt="User's Profile Pic" src="{{ user.profile.image.url}}" class="rounded-circle" width="150px;">
+                    <article class="media content-section">
+                        <div class="media-body">
+                            <div class="article-metadata">
+                                <h5>#{{ object.id }}</h5>
+                                <h3><a href="#">{{ object.Record_ID }}</a></h3>
+                                <p>Doctor: {{ object.Doctor_ID }}</p>
+                                <p>Hospital: {{ object.Hospital_ID }}</p>
+                            </div>
+                            <p class="article-content">Appointment Details: {{ object.Appointment_Details }}</p>
+                            <p class="article-content">{{ object.Appointment_Status }}</p>
+                            <small class="text-muted">{{ object.Appointment_Schedule }}</small>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

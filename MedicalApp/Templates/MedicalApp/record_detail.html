@@ -23,7 +23,7 @@
         <img alt="User's Profile Pic" src="{{ user.profile.image.url}}" class="rounded-circle" width="150px;">
         <div class="media-body">
             <div class="article-metadata">
-                <h5><a href="{% url 'UpdateRecordModule' records.id %}">#{{ object.id }}</a></h5>
+                <h5>#{{ object.id }}</h5>
                 <h3>{{ object.Patient_ID }}</h3>
                 <p>Doctor: {{ object.Doctor_ID }}</p>
                 <p>Hospital: {{ object.Hospital_ID }}</p>

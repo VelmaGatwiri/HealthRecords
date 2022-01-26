@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-8 mt-1">
                     <div class="card mb-3 content">
-                        <h1 class="m-3 pt-3">Health Status</h1>
+                        <h1 class="m-3 pt-3">Information</h1>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3">
@@ -58,31 +58,12 @@
                                 </div>
                             </div>
                                 <hr>
-
                             <div class="row">
                                 <div class="col-md-3">
-                                    <h5>Blood Group:</h5>
+                                    <h5>Specialty:</h5>
                                 </div>
                                 <div class="col-md-9 text-secondary">
-                                    {{ patients.Blood_Group }}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <h5>Allergies:</h5>
-                                </div>
-                                <div class="col-md-9 text-secondary">
-                                    {{ patients.Allergies }}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <h5>Next of Kin:</h5>
-                                </div>
-                                <div class="col-md-9 text-secondary">
-                                    {{ patients.Next_Of_Kin }}
+                                    {{ doc.specialty }}
                                 </div>
                             </div>
                         </div>
@@ -96,7 +77,7 @@
                                 </div>
                                 <div class="col-md-9 text-secondary">
                                     {% for appointment in appointment %}
-                                        {{ appointment.Appointment_Details }} <br>Time: {{ appointment.Appointment_Schedule }}
+                                        Patient Name: {{ appointment.Patient_ID }} <br>Time: {{ appointment.Appointment_Schedule }}
                                     {% endfor %}
                                 </div>
                             </div>

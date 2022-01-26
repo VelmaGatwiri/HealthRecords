@@ -1,16 +1,12 @@
+{% extends "Users/RegistrationNavbar.html" %}
 {% load crispy_forms_filters %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
+{% block content %}
     <div class="content-section">
         <form action="{% url 'User-DoctorRegistration' %}" method="POST" novalidate>
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">User Registration Form</legend>
+                <legend class="border-bottom mb-4">Doctor Registration Form</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
@@ -19,5 +15,4 @@
             </div>
          </form>
     </div>
-</body>
-</html>
+{% endblock %}

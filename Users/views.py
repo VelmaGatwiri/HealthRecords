@@ -5,8 +5,7 @@ from .forms import *
 from django.shortcuts import render
 from django.views.generic import CreateView
 from .decorators import *
-from .models import *
-from MedicalApp.models import Hospital
+from MedicalApp.filters import *
 
 
 def home(request):
@@ -20,7 +19,10 @@ def patient(request, pk):
 
     records = pat.record_set.all().order_by('-Record_Date')
 
-    context = {'patient': pat, 'records': records}
+    patientfilter = RecordPatientFilter(request.GET, queryset=records)
+    records = patientfilter.qs
+
+    context = {'pat': pat, 'records': records, 'patientfilter': patientfilter}
     return render(request, 'Users/PatientModule.html', context)
 
 
@@ -32,8 +34,16 @@ def admin(request):
 
 @login_required
 @allowed_users(allowed_roles=['Doctor'])
-def doctor(request):
-    return render(request, 'Users/DoctorModule.html')
+def doctor(request, pk):
+    doct = Doctor.objects.get(user_id=pk)
+
+    records = doct.record_set.all().order_by('-Record_Date')
+
+    myfilter = RecordFilter(request.GET, queryset=records)
+    records = myfilter.qs
+
+    context = {'doct': doct, 'records': records, 'myfilter': myfilter}
+    return render(request, 'Users/DoctorModule.html', context)
 
 
 @login_required
@@ -56,7 +66,7 @@ def login_view(request):
             if user is not None and user.is_doctor:
                 login(request, user)
                 return redirect('DoctorModule')
-            if user is not None and user.is_admin:
+            if user is not None and user.is_administrator:
                 login(request, user)
                 return redirect('AdminModule')
             if user is not None and user.is_hospital:
@@ -96,15 +106,29 @@ class HospitalRegistration(CreateView):
     model = CustomUser
     form_class = HospitalRegistrationForm
     template_name = 'Users/HospitalRegistration.html'
+    title = 'Hospital Registration'
 
     def validation(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('AdminModule')
+        return redirect('/')
 
 
-def user_details(request):
-    return render(request, 'Users/User_Details.html')
+def user_details(request, pk):
+    patients = Patient.objects.get(user_id=pk)
+    appointment = patients.appointment_set.filter(Appointment_Status="Pending")
+
+    context = {'patients': patients, 'appointment': appointment}
+    return render(request, 'Users/User_Details.html', context)
+
+
+def doctor_details(request, pk):
+    doc = Doctor.objects.get(user_id=pk)
+    appointment = doc.appointment_set.filter(Appointment_Status="Pending")
+
+    context = {'doc': doc, 'appointment': appointment}
+
+    return render(request, 'Users/Doctor_Details.html', context)
 
 
 @login_required

@@ -1,23 +1,18 @@
+{% extends "Users/RegistrationNavbar.html" %}
 {% load crispy_forms_filters %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
+{% block content %}
     <div class="content-section">
         <form action="{% url 'User-HospitalRegistration' %}" method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">User Registration Form</legend>
+                <legend class="border-bottom mb-4">Hospital Registration Form</legend>
                 {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign up</button>
-                 <button class="btn btn-outline-info">Cancel</button>
+                <div class="form-group" style="padding-top: 20px;">
+                <button class="btn btn-outline-info" type="submit"><a href="#">Sign up</a></button>
+                <button class="btn btn-outline-warning"><a href="{% url 'AdminModule' %}">Cancel</a></button>
             </div>
+            </fieldset>
          </form>
     </div>
-</body>
-</html>
+{% endblock %}

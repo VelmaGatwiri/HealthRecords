@@ -4,11 +4,10 @@
     font-family: Verdana, cursive;
 }
 body{
-    background-color: lightgray;
+    background-color: rgba(0,0,0,.1);
     height: 90vh;
-    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url("../images/woman.jpg");
+    background-image: url("../images/adult.jpg");
     background-size: cover;
-    background-position: 150px -80px;
 }
 nav{
     width: 100%;

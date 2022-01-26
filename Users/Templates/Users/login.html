@@ -29,12 +29,13 @@
 </head>
 <body>
     <div class="banner">
-        <div class="navbar">
+        <div class="navbar" style="color: white;">
+            <img src="{% static 'images/Logo.png' %}" alt="System Logo" style="width: 250px; height: 50px;">
             <ul>
                 <li><a href="#">About</a></li>
-                <li><a href="{% url 'AdminModule' %}">Admin Module</a></li>
-                <li><a href="{% url 'DoctorModule' %}">Doctor Module</a></li>
-                <li><a href="{% url 'HospitalModule' %}">Hospital Module</a></li>
+                <li><a href="{% url 'Staff-Login' %}">Admin Module</a></li>
+                <li><a href="{% url 'Staff-Login' %}">Doctor Module</a></li>
+                <li><a href="{% url 'Staff-Login' %}">Hospital Module</a></li>
                 <li><a href="#">Contact</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>

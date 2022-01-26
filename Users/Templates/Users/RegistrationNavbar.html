@@ -1,0 +1,42 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-HEALTH REGISTRATION</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/Registration.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&family=Noto+Serif&family=Playfair+Display:wght@500;600&family=Slabo+27px&display=swap" rel="stylesheet">
+    <style>
+        fieldset{
+            margin-left:30px;
+            color: white;
+            font-family: 'Lato', sans-serif;
+        }
+        legend{
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <nav>
+            <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
+            <ul>
+                <li><a  href="#">Dashboard</a></li>
+                <li><a  href="#">Reports</a></li>
+                <li><a  href="#">Profile</a></li>
+                <li><a  href="#">Contact</a></li>
+                <li><a  href="#">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+{% block content %} {% endblock %}
+</body>
+</html>

@@ -1,14 +1,5 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: Verdana, cursive;
-}
 body{
     background-color: lightgray;
-    height: 90vh;
-    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url("../images/woman.jpg");
-    background-size: cover;
-    background-position: 150px -80px;
 }
 nav{
     width: 100%;

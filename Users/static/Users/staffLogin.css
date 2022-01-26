@@ -6,9 +6,9 @@
 body{
     background-color: lightgray;
     height: 90vh;
-    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url("../images/woman.jpg");
+    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url("../images/windows.jpg");
     background-size: cover;
-    background-position: 150px -80px;
+    font-size: 20px;
 }
 nav{
     width: 100%;

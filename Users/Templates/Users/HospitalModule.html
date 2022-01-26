@@ -4,16 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'Users/UsersStyle.css' %}">
-   {% if title %}
-    <title>E-Health - {{ title }}</title>
-   {% else %}
-    <title>E-Health</title>
-   {% endif %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/UserModules.css' %}">
+
+    <title>Hospital Module</title>
+
 </head>
 <body>
-    <div class="navbar">
-        <p>Navbar</p>
-        <!--Add patient, add Doctor, Hospital Name, system Logo -->
+    <div id="main">
+        <nav>
+            <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
+            <ul>
+                <li><a  href="#">Dashboard</a></li>
+                <li><a  href="#">Reports</a></li>
+                <li><a  href="#">Profile</a></li>
+                <li><a  href="#">Contact</a></li>
+                <li><a  href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
     </div>
     <div class="container">
         <div class="navPane" style="height: 350px;">

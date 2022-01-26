@@ -4,16 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'Users/UsersStyle.css' %}">
-   {% if title %}
-    <title>E-Health - {{ title }}</title>
-   {% else %}
-    <title>E-Health</title>
-   {% endif %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/UserModules.css' %}">
+
+    <title>E-Health - {{ user.username }}</title>
+<style>
+    .patient-rec-table{
+        border-collapse: collapse;
+        margin: 25px 5px 0 300px;
+        font-size: 14px;
+        min-width: 400px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    }
+    .patient-rec-table thead tr{
+        background-color: #0005;
+        color: white;
+        text-align: left;
+        font-weight: bold;
+    }
+    .patient-rec-table th,
+    .patient-rec-table td{
+        padding: 12px 15px;
+    }
+    .patient-rec-table tbody tr{
+        border-bottom: 1px solid #dddddd;
+    }
+    .patient-rec-table tbody tr:nth-of-type(even){
+        background-color: #f3f3f3;
+    }
+    .patient-rec-table tbody tr:last-of-type{
+        border-bottom: 2px solid #009688;
+    }
+    body{
+    background-color: rgba(0,0,0,.1);
+    height: 90vh;
+    background-image: url{% static 'images/adult.jpg' %};
+    background-size: cover;
+}
+
+</style>
 </head>
 <body>
-    <div class="navbar">
-        <p>Navbar</p>
-        <!--Search patient, system Logo -->
+    <div id="main">
+        <nav>
+            <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
+            <ul>
+                <li><a  href="#">Dashboard</a></li>
+                <li><a  href="#">Reports</a></li>
+                <li><a  href="#">Profile</a></li>
+                <li><a  href="#">Contact</a></li>
+                <li><a  href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
     </div>
     <div class="container">
         <div class="navPane">
@@ -22,12 +65,49 @@
             <button class="btn"><a href="#">Patient</a></button>
             <button class="btn"><a href="#">Reports</a></button>
             <button class="btn"><a href="#">Contact Administrator</a></button>-->
-            <button class="btn">Profile</button>
-            <button class="btn">Patient</button>
-            <button class="btn">Appointments</button>
+            <button class="btn"><a href="{% url 'DoctorDetailsModule' user.id %}">Profile</a></button>
+            <button class="btn"><a href="#">Patient</a></button>
+            <button class="btn"><a href="{% url 'DoctorAppointmentModule' user.id %}">Appointments</a></button>
+            <button class="btn"><a href="{% url 'DoctorPrescriptionModule' user.id %}">Prescriptions</a></button>
         </div>
-        <h1>Dr. {{ user.username }}</h1>
-        <!--Write a brief background of the hospitals module and incorporate moving pictures.-->
+        <h1>Dr. {{ user.first_name }} {{ user.last_name }}</h1>
+            <div class="row" style="margin-left: 25%;">
+                <div class="col">
+                    <div class="card card-body">
+                        <form method="get">
+                            {{ myfilter.form }}
+                            <button style="background-color: blue; border: none; color: white; padding: 5px;
+  text-align: center; text-decoration: none; display: inline-block; font-size: 18px; margin: 2px 2px;
+  cursor: pointer;
+    border-radius: 12px;" class="searchButton" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <table class="patient-rec-table">
+                <thead>
+                    <tr>
+                    <th>Patient's Name</th>
+                    <th>Hospital Name</th>
+                    <th>Diagnosis</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for  records in records %}
+                    <tr>
+                        <td><a href="#">{{ records.Patient_ID }}</a></td>
+                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.Hospital_ID }}</a></td>
+                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.New_Diagnosis }}</a></td>
+                        <td>{{ records.Record_Date }}</td>
+                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateRecordModule' records.id %}">UPDATE</a></td>
+                        <td><a style="color:red; font-weight: bold;" href="{% url 'DeleteRecordModule' records.id %}">DELETE</a></td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
     </div>
 </body>
 </html>

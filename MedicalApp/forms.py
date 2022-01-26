@@ -20,7 +20,7 @@ class AppointmentForm(ModelForm):
     class Meta:
         model = Appointment
         fields = ('Patient_ID', 'Doctor_ID', 'Hospital_ID', 'Record_ID', 'Appointment_Details',
-                  'Appointment_Schedule')
+                  'Appointment_Status', 'Appointment_Schedule')
 
         widgets = {
             'Patient_ID': forms.Select(attrs={'class': 'form-control'}),
@@ -28,6 +28,7 @@ class AppointmentForm(ModelForm):
             'Hospital_ID': forms.Select(attrs={'class': 'form-control'}),
             'Record_ID': forms.Select(attrs={'class': 'form-control'}),
             'Appointment_Details': forms.Textarea(attrs={'class': 'form-control'}),
+            'Appointment_Status': forms.Select(attrs={'class': 'form-control'}),
             'Appointment_Schedule': forms.DateTimeInput(attrs={'class': 'form-control datetimepicker-input',
                                                                'data-target': '#id_Appointment_Schedule'}),
         }

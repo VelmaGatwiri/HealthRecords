@@ -23,13 +23,16 @@
         <img alt="User's Profile Pic" src="{{ user.profile.image.url}}" class="rounded-circle" width="150px;">
         <div class="media-body">
             <div class="article-metadata">
-                <h5><a href="{% url 'UpdateRecordModule' records.id %}">#{{ object.id }}</a></h5>
-                <h3>{{ object.Patient_ID }}</h3>
+
+                <h5>#{{ object.id }}</h5>
+                <h3><a href="#">{{ object.Record_ID }}</a></h3>
                 <p>Doctor: {{ object.Doctor_ID }}</p>
                 <p>Hospital: {{ object.Hospital_ID }}</p>
+                {% for records in records %}
+                <p>{{ records.New_Diagnosis }}</p>
+                {% endfor %}
             </div>
-            <p class="article-content">{{ object.New_Diagnosis }}</p>
-             <small class="text-muted">{{ object.Record_Date }}</small>
+            <small class="text-muted">{{ object.Prescription_Details }}</small>
         </div>
 
     </article>

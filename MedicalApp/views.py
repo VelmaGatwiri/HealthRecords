@@ -6,6 +6,7 @@ from Codes.forms import CodeForm
 from .utils import *
 from django.views.generic import ListView, DetailView
 from .models import *
+from .filters import *
 
 
 class RecordsListView(ListView):
@@ -17,6 +18,16 @@ class RecordsListView(ListView):
 
 class RecordsDetailView(DetailView):
     model = Record
+
+
+def records_view(request, pk):
+    records = Record.objects.get(id=pk)
+
+    appointment = records.appointment_set.all()
+    prescription = records.prescription_set.all()
+
+    context = {'records': records, 'appointment': appointment, 'prescription': prescription}
+    return render(request, 'MedicalApp/prescription_detail.html', context)
 
 
 class AppointmentListView(ListView):
@@ -87,6 +98,27 @@ def create_appointment(request):
     return render(request, 'MedicalApp/Appointment_form.html', context)
 
 
+def view_appointment(request, pk):
+    pat = Patient.objects.get(user_id=pk)
+
+    appointment = pat.appointment_set.filter(Appointment_Status="Pending")
+
+    context = {'pat': pat, 'appointment': appointment}
+    return render(request, 'MedicalApp/patientAppointment.html', context)
+
+
+def doctor_appointment(request, pk):
+    doc = Doctor.objects.get(user_id=pk)
+
+    appointment = doc.appointment_set.filter(Appointment_Status="Pending")
+
+    doctorfilter = AppointmentFilter(request.GET, queryset=appointment)
+    appointment = doctorfilter.qs
+
+    context = {'doc': doc, 'appointment': appointment, 'doctorfilter': doctorfilter}
+    return render(request, 'MedicalApp/doctorAppointment.html', context)
+
+
 def update_appointment(request, pk):
     app = Appointment.objects.get(id=pk)
     form = AppointmentForm(instance=app)
@@ -118,6 +150,27 @@ def create_prescription(request):
     context = {'form': form}
 
     return render(request, 'MedicalApp/Prescription_form.html', context)
+
+
+def view_prescription(request, pk):
+    pat = Patient.objects.get(user_id=pk)
+
+    prescription = pat.prescription_set.all()
+
+    context = {'pat': pat, 'prescription': prescription}
+    return render(request, 'MedicalApp/patientPrescription.html', context)
+
+
+def doctor_prescription(request, pk):
+    doc = Doctor.objects.get(user_id=pk)
+
+    prescription = doc.prescription_set.all()
+
+    doctorPresfilter = PrescriptionFilter(request.GET, queryset=prescription)
+    prescription = doctorPresfilter.qs
+
+    context = {'doc': doc, 'prescription': prescription, 'doctorPresfilter': doctorPresfilter}
+    return render(request, 'MedicalApp/doctorPrescription.html', context)
 
 
 def update_prescription(request, pk):

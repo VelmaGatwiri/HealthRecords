@@ -5,14 +5,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>E-HEALTH - Staff Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/staffLogin.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&family=Noto+Serif&family=Playfair+Display:wght@500;600&family=Slabo+27px&display=swap" rel="stylesheet">
+    <style>
+        fieldset{
+            color: white;
+            font-family: 'Lato', sans-serif;
+            margin: 60px 10px;
+            line-height: 1.6;
+        }
+        legend{
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <form method="POST">
-        <h1 style="text-align: center">STAFF LOGIN FORM</h1>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="log" type="submit">LOGIN</button>
-    </form>
+    <div id="main">
+        <nav>
+            <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="{% url 'Staff-Login' %}">Admin Module</a></li>
+                <li><a href="{% url 'Staff-Login' %}">Doctor Module</a></li>
+                <li><a href="{% url 'Staff-Login' %}">Hospital Module</a></li>
+                <li><a href="#">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Staff Login Form</legend>
+                {{ form|crispy }}
+                <div class="form-group" style="padding-top: 20px;">
+                <button class="btn btn-outline-info" type="submit" style="margin-right: 100px;">LOGIN</button>
+                <button class="btn btn-outline-warning"><a href="{% url 'login' %}">CANCEL</a></button>
+            </div>
+            </fieldset>
+         </form>
+    </div>
 </body>
 </html>

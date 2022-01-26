@@ -28,35 +28,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'Users/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Users/main.css' %}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&family=Playfair+Display:ital@1&family=Slabo+27px&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="ban">
-        <div class="navbar">
+    <div class="main">
+        <nav>
+            <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
             <ul>
                 <li><a href="#">About</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'UserDetailsModule' %}">Profile</a></li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                    <li><a href="{% url 'User-PatientRegistration' %}">Add Patient</a></li>
-                    <li><a href="{% url 'User-DoctorRegistration' %}">Add Doctor</a></li>
-                    <li><a href="{% url 'User-HospitalRegistration' %}">Add Hospital</a></li>
+                    <li><a href="{% url 'Staff-Login' %}">Admin Module</a></li>
+                    <li><a href="{% url 'Staff-Login' %}">Doctor Module</a></li>
+                    <li><a href="{% url 'Staff-Login' %}">Hospital Module</a></li>
                 {% endif %}
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
+                    <li><a href="#">Contact</a></li>
 
-            {% block content %}
-                {% if messages %}
+            </ul>
+        </nav>
+     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}"></div>
             {{ message }}
         {% endfor %}
     {% endif %}
-            {% endblock content %}
     </div>
+            {% block content %}
+
+            {% endblock content %}
+
 </body>
 </html>
