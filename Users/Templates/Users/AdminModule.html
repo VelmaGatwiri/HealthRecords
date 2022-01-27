@@ -13,7 +13,7 @@
         <nav>
             <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
             <ul>
-                <li><a  href="#">Dashboard</a></li>
+                <li><a  href="{{request.META.HTTP_REFERER|escape}}">Dashboard</a></li>
                 <li><a  href="#">Reports</a></li>
                 <li><a  href="#">Profile</a></li>
                 <li><a  href="#">Contact</a></li>
@@ -32,7 +32,28 @@
             <button class="btn"><a href="#">Reports</a></button>
         </div>
         <h1>{{ user.username }}'s Registered Hospitals</h1>
+        <table class="patient-rec-table">
+                <thead>
+                    <tr>
+                    <th>Hospital Name</th>
+                    <th>Registration Date</th>
+                </tr>
+                </thead>
 
+                <tbody>
+                {% for  hos in hos %}
+                    <tr>
+                        <td><a href="#">{{ records.Patient_ID }}</a></td>
+                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.Hospital_ID }}</a></td>
+                        <td><a href="{% url 'Records-Details' records.id %}">{{ records.New_Diagnosis }}</a></td>
+                        <td>{{ records.Record_Date }}</td>
+                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateRecordModule' records.id %}">UPDATE</a></td>
+                        <td><a style="color:red; font-weight: bold;" href="{% url 'DeleteRecordModule' records.id %}">DELETE</a></td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         <!--Write a brief background of the hospitals module and incorporate moving pictures.-->
     </div>
 </body>

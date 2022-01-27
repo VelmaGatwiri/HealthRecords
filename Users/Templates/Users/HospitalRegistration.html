@@ -9,8 +9,8 @@
                 <legend class="border-bottom mb-4">Hospital Registration Form</legend>
                 {{ form|crispy }}
                 <div class="form-group" style="padding-top: 20px;">
-                <button class="btn btn-outline-info" type="submit"><a href="#">Sign up</a></button>
-                <button class="btn btn-outline-warning"><a href="{% url 'AdminModule' %}">Cancel</a></button>
+                <button class="btn btn-outline-info" type="submit"><a href="{% url 'AdminModule' user.id %}">Sign up</a></button>
+                <button class="btn btn-outline-warning"><a href="{{request.META.HTTP_REFERER|escape}}">Cancel</a></button>
             </div>
             </fieldset>
          </form>

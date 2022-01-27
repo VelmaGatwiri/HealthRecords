@@ -9,6 +9,8 @@ urlpatterns = [
     path('updateRecord/<str:pk>', views.update_record, name='UpdateRecordModule'),
     path('deleteRecord/<str:pk>', views.delete_record, name='DeleteRecordModule'),
 
+    path('hospital/<str:pk>/', HospitalDetailView.as_view(), name='Hospital-Details'),
+
     path('appointmentModule/', AppointmentListView.as_view(), name='AppointmentsModule'),
     path('appointment/<str:pk>/', AppointmentDetailView.as_view(), name='Appointment-Details'),
     path('addAppointment/', views.create_appointment, name='AddAppointmentModule'),

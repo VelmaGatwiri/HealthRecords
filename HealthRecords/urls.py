@@ -29,6 +29,7 @@ urlpatterns = [
     path('Users/', include('Users.urls')),
     path('MedicalApp/', include('MedicalApp.urls')),
     path('verify/', verify_view, name='verify_view'),
+    # path('report_builder/', include()),
 ]
 
 if settings.DEBUG:

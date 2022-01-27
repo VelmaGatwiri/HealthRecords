@@ -1,12 +1,13 @@
 from .forms import *
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from Codes.forms import CodeForm
 from .utils import *
 from django.views.generic import ListView, DetailView
-from .models import *
+from Users.decorators import *
 from .filters import *
+from django.contrib.auth.decorators import login_required
 
 
 class RecordsListView(ListView):
@@ -50,6 +51,8 @@ class PrescriptionDetailView(DetailView):
     model = Prescription
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def create_record(request):
     form = RecordForm()
     if request.method == 'POST':
@@ -62,6 +65,8 @@ def create_record(request):
     return render(request, 'MedicalApp/Record_form.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def update_record(request, pk):
     record = Record.objects.get(id=pk)
     form = RecordForm(instance=record)
@@ -75,6 +80,8 @@ def update_record(request, pk):
     return render(request, 'MedicalApp/Record_form.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def delete_record(request, pk):
     record = Record.objects.get(id=pk)
     if request.method == "POST":
@@ -86,6 +93,8 @@ def delete_record(request, pk):
     return render(request, 'MedicalApp/delete_Record.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def create_appointment(request):
     form = AppointmentForm()
     if request.method == 'POST':
@@ -119,6 +128,8 @@ def doctor_appointment(request, pk):
     return render(request, 'MedicalApp/doctorAppointment.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def update_appointment(request, pk):
     app = Appointment.objects.get(id=pk)
     form = AppointmentForm(instance=app)
@@ -132,6 +143,8 @@ def update_appointment(request, pk):
     return render(request, 'MedicalApp/Appointment_form.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def delete_appointment(request, pk):
     app = Appointment.objects.get(id=pk)
     context = {
@@ -140,6 +153,8 @@ def delete_appointment(request, pk):
     return render(request, 'MedicalApp/delete_Appointment.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def create_prescription(request):
     form = PrescriptionForm()
     if request.method == 'POST':
@@ -166,13 +181,15 @@ def doctor_prescription(request, pk):
 
     prescription = doc.prescription_set.all()
 
-    doctorPresfilter = PrescriptionFilter(request.GET, queryset=prescription)
-    prescription = doctorPresfilter.qs
+    doctorpresfilter = PrescriptionFilter(request.GET, queryset=prescription)
+    prescription = doctorpresfilter.qs
 
-    context = {'doc': doc, 'prescription': prescription, 'doctorPresfilter': doctorPresfilter}
+    context = {'doc': doc, 'prescription': prescription, 'doctorpresfilter': doctorpresfilter}
     return render(request, 'MedicalApp/doctorPrescription.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def update_prescription(request, pk):
     pre = Prescription.objects.get(id=pk)
     form = PrescriptionForm(instance=pre)
@@ -186,12 +203,24 @@ def update_prescription(request, pk):
     return render(request, 'MedicalApp/Appointment_form.html', context)
 
 
+@login_required
+@allowed_users(allowed_roles=['Doctor'])
 def delete_prescription(request, pk):
     pre = Prescription.objects.get(id=pk)
     context = {
         'item': pre
     }
     return render(request, 'MedicalApp/delete_Appointment.html', context)
+
+
+class HospitalDetailView(DetailView):
+    model = Hospital
+
+
+class HospitalListView(ListView):
+    model = Hospital
+    template_name = 'Users/HospitalModule.html'
+    context_object_name = 'hos'
 
 
 def auth_view(request):
@@ -223,7 +252,7 @@ def verify_view(request):
             if str(code) == num:
                 code.save()
                 login(request, user)
-                return redirect('RecordsModule')
+                return redirect('PatientModule', user.id)
             else:
                 return redirect('login')
     return render(request, 'verify.html', {'form': form})

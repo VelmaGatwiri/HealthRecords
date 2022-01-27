@@ -63,9 +63,9 @@
         <div class="navPane">
             <h1>Navigation</h1>
             <button class="btn"><a href="{% url 'DoctorDetailsModule' user.id %}">Profile</a></button>
-            <button class="btn"><a href="#">Records</a></button>
+            <button class="btn"><a href="{% url 'DoctorModule' user.id %}">Records</a></button>
             <button class="btn"><a href="{% url 'DoctorAppointmentModule' user.id %}">Appointments</a></button>
-            <button class="btn"><a href="{% url 'DoctorPrescriptionModule' user.id %}">Prescriptions</a></button>
+            <button class="btn"><a href="{% url 'AddPrescriptionModule' %}">Prescriptions</a></button>
             <!--<button class="btn" href="{% url 'profile' %}">Profile</button>
             <button class="btn" href="{% url 'RecordsModule' %}">Records</button>
             <button class="btn" href="#">Appointments</button>
@@ -76,7 +76,7 @@
             <div class="col">
                 <div class="card card-body">
                     <form method="get">
-                        {{ doctorPresfilter.form }}
+                        {{ doctorpresfilter.form }}
                         <button style="background-color: blue; border: none; color: white; padding: 5px;
 text-align: center; text-decoration: none; display: inline-block; font-size: 18px; margin-left: 10px ;
 cursor: pointer;

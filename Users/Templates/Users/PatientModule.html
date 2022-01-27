@@ -48,7 +48,7 @@
             <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
             <ul>
                 <li><a  href="{{request.META.HTTP_REFERER|escape}}">Dashboard</a></li>
-                <li><a  href="#">Reports</a></li>
+                <li><a  href="{% url 'records_Pdf' %}">Reports</a></li>
                 <li><a  href="#">Profile</a></li>
                 <li><a  href="#">Contact</a></li>
                 <li><a  href="{% url 'logout' %}">Logout</a></li>
@@ -59,13 +59,10 @@
         <div class="navPane">
             <h1>Navigation</h1>
             <button class="btn"><a href="{% url 'UserDetailsModule' user.id  %}">Profile</a></button>
-            <button class="btn"><a href="{% url 'RecordsModule' %}">Records</a></button>
-            <button class="btn"><a href="#">Appointments</a></button>
-            <button class="btn"><a href="#">Prescriptions</a></button>
-            <!--<button class="btn" href="{% url 'profile' %}">Profile</button>
-            <button class="btn" href="{% url 'RecordsModule' %}">Records</button>
-            <button class="btn" href="#">Appointments</button>
-            <button class="btn" href="#">Prescriptions</button>-->
+            <button class="btn"><a href="{% url 'PatientModule' user.id %}">Records</a></button>
+            <button class="btn"><a href="{% url 'ViewAppointmentModule' user.id %}">Appointments</a></button>
+            <button class="btn"><a href="{% url 'ViewPrescriptionModule' user.id %}">Prescriptions</a></button>
+
         </div>
         <h1 style="color: #542344; font-weight: bold; font-style: italic;">Recent Records</h1><hr style="border-top: 1px dashed #009688;">
         <div class="row" style="margin-left: 25%;">
@@ -78,6 +75,7 @@
   cursor: pointer;
     border-radius: 12px;" class="searchButton" type="submit">Search</button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -98,8 +96,8 @@
                         <td><a href="{% url 'Records-Details' records.id %}">{{ records.Hospital_ID }}</a></td>
                         <td><a href="{% url 'Records-Details' records.id %}">{{ records.New_Diagnosis }}</a></td>
                         <td>{{ records.Record_Date }}</td>
-                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateRecordModule' records.id %}">UPDATE</a></td>
-                        <td><a style="color:red; font-weight: bold;" href="{% url 'DeleteRecordModule' records.id %}">DELETE</a></td>
+                        <!--<td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateRecordModule' records.id %}">UPDATE</a></td>
+                        <td><a style="color:red; font-weight: bold;" href="{% url 'DeleteRecordModule' records.id %}">DELETE</a></td>-->
 
                     </tr>
                 {% endfor %}

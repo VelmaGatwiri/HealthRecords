@@ -50,8 +50,8 @@
         <nav>
             <img src="{% static 'images/logo.png' %}" alt="System Logo" style="width: 200px; height: 80px; margin-left: 5px;">
             <ul>
-                <li><a  href="#">Dashboard</a></li>
-                <li><a  href="#">Reports</a></li>
+                <li><a  href="{{request.META.HTTP_REFERER|escape}}">Dashboard</a></li>
+                <li><a  href="{% url 'records_Pdf' %}">Reports</a></li>
                 <li><a  href="#">Profile</a></li>
                 <li><a  href="#">Contact</a></li>
                 <li><a  href="{% url 'logout' %}">Logout</a></li>

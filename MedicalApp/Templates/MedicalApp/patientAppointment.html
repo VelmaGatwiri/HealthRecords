@@ -62,10 +62,10 @@
     <div class="container">
         <div class="navPane">
             <h1>Navigation</h1>
-            <button class="btn"><a href="{% url 'UserDetailsModule' patients.id %}">Profile</a></button>
+            <button class="btn"><a href="{% url 'UserDetailsModule' user.id %}">Profile</a></button>
             <button class="btn"><a href="{% url 'PatientModule' user.id %}">Records</a></button>
-            <button class="btn"><a href="{% url 'AddAppointmentModule' %}">Appointments</a></button>
-            <button class="btn"><a href="{% url 'Prescription-Details' user.id %}">Prescriptions</a></button>
+            <button class="btn"><a href="#">Appointments</a></button>
+            <button class="btn"><a href="{% url 'ViewPrescriptionModule' user.id %}">Prescriptions</a></button>
             <!--<button class="btn" href="{% url 'profile' %}">Profile</button>
             <button class="btn" href="{% url 'RecordsModule' %}">Records</button>
             <button class="btn" href="#">Appointments</button>
@@ -91,8 +91,8 @@
                         <td><a href="{% url 'Appointment-Details' appointment.id %}">{{ appointment.Appointment_Details }}</a></td>
                         <td>{{ appointment.Appointment_Schedule }}</td>
                         <td>{{ appointment.Appointment_Status }}</td>
-                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateAppointmentModule' appointment.id %}">UPDATE</a></td>
-                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'DeleteAppointmentModule' appointment.id %}">DELETE</a></td>
+                       <!-- <td><a style="color:#009688; font-weight: bold;" href="{% url 'UpdateAppointmentModule' appointment.id %}">UPDATE</a></td>
+                        <td><a style="color:#009688; font-weight: bold;" href="{% url 'DeleteAppointmentModule' appointment.id %}">DELETE</a></td> -->
 
                     </tr>
                 {% endfor %}

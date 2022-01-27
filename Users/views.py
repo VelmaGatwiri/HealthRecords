@@ -6,6 +6,20 @@ from django.shortcuts import render
 from django.views.generic import CreateView
 from .decorators import *
 from MedicalApp.filters import *
+from MedicalApp.models import *
+import csv
+from django.http import FileResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+pdfmetrics.registerFont(TTFont('Vera', 'Vera.ttf'))
+pdfmetrics.registerFont(TTFont('VeraBd', 'VeraBd.ttf'))
+pdfmetrics.registerFont(TTFont('VeraIt', 'VeraIt.ttf'))
+pdfmetrics.registerFont(TTFont('VeraBI', 'VeraBI.ttf'))
 
 
 def home(request):
@@ -28,8 +42,11 @@ def patient(request, pk):
 
 @login_required
 @allowed_users(allowed_roles=['Admin'])
-def admin(request):
-    return render(request, 'Users/AdminModule.html')
+def admin(request, pk):
+    adm = Administrator.objects.get(user_id=pk)
+    hos = admin.hospital_set.all().order_by('-Registration_Date')
+    context = {'adm': adm, 'hos': hos}
+    return render(request, 'Users/AdminModule.html', context)
 
 
 @login_required
@@ -65,13 +82,13 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None and user.is_doctor:
                 login(request, user)
-                return redirect('DoctorModule')
+                return redirect('DoctorModule', user.id)
             if user is not None and user.is_administrator:
                 login(request, user)
-                return redirect('AdminModule')
+                return redirect('AdminModule', user.id)
             if user is not None and user.is_hospital:
                 login(request, user)
-                return redirect('HospitalModule')
+                return redirect('HospitalModule', hospital.id)
             else:
                 messages.info(request, 'Username or Password is incorrect')
         else:
@@ -150,3 +167,34 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'Users/profile.html', context)
+
+
+def records_pdf(request):
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont('Vera', 4)
+
+    #    lines = [
+
+    #   ]
+    record = Record.objects.all()
+    lines = []
+    for record in record:
+        lines.append(record.Patient_ID)
+        lines.append(record.Doctor_ID)
+        lines.append(record.Hospital_ID)
+        lines.append(record.New_Diagnosis)
+        lines.append(record.Record_Date)
+        lines.append(" ")
+
+    for line in lines:
+        textob.textLine(line)
+
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename='records_Pdf')
